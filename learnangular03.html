@@ -1,0 +1,22 @@
+<html>
+<head>
+	<script src='angular-1.4.5/angular.min.js'/></script>
+	<script type='text/javascript'>
+		var myAppModule = angular.module('myApp', []);
+		//1a create controller with array of objects
+		//notice $scope is passed in the function using the controller
+		//notice $scope contains array of objects
+		myAppModule.controller('heroController', function ($scope) { 
+			$scope.heros = [ {name: 'batman', age:11}, {name: 'superman', age:22} ]
+		});
+	</script>
+</head>
+<body ng-app='myApp'>
+	<!--1b add ng-controller directive to div container -->
+	  <div ng-controller='heroController'>
+	    <ul>
+	       <li ng-repeat="hero in heros">{{hero.name}}, {{hero.age}}</li>
+	    </ul>   
+	  </div>
+</body>
+</html>
