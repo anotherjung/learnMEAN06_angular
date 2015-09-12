@@ -1,0 +1,20 @@
+
+<html>
+<head>
+	<script src='angular-1.4.5/angular.min.js'/></script>
+	<!--1a create angular module myApp-->
+	<script type='text/javascript'>
+		var myAppModule = angular.module('myApp', []);
+	</script>
+</head>
+<!--1b create angular module myApp-->
+<body ng-app='myApp'>
+	<!-- create array of JSON objects -->
+	  <div ng-init="heros=[{name: 'batman', age:11}, {name: 'superman', age:22}]">
+	    <ul>
+	       <!--loop the array -->
+	       <li ng-repeat="hero in heros">{{hero.name}}, {{hero.age}}
+	    </ul>   
+	  </div>
+</body>
+</html>
