@@ -1,0 +1,89 @@
+<html>
+<head>
+	<link href='css/materialize.css' rel='stylesheet' />
+	<script src='angular-1.4.5/angular.min.js'/></script>
+	<script type='text/javascript'>
+		var myAppModule = angular.module('myApp', []);
+		//3 tell controller which factory to talk to 
+		myAppModule.controller('heroController', function ($scope, heroFactory) { 
+			//3 create scope for array 
+			$scope.heros = [];
+			//3 get data from factory
+			heroFactory.getHeros(function (data){
+				$scope.heros = data;
+			})
+
+			//2a ng-click
+			$scope.addHero = function () {
+				//add to array
+				$scope.heros.push($scope.newHero);
+				//clear form values by giving it an empty object
+				$scope.newHero = {};
+			}
+		}); //ends controller
+
+		myAppModule.factory('heroFactory', function () {
+			//3 factory is a function that returns an object literal
+			var heros = [ 
+				{name:'batman', number:11, color:'black'}, 
+				{name:'superman', number:22, color:'blue/red'},
+				{name:'ironman', number:11, color:'red/gold'}, 
+				{name:'hulk', number:22, color:'green'} 
+				];
+			var factory = {};
+			//3 create getHeros method to a callback 
+			factory.getHeros = function (callback) {
+				console.log('here in factory');
+				//pass the heros object to callback
+				callback(heros);
+			}
+			return factory
+		}) //ends factory
+	</script>
+</head>
+<body ng-app='myApp'>
+	<!--1b add ng-controller directive to div container -->
+	  <div class="container" ng-controller='heroController'>
+	  	<div class="row">
+	  	 <div class="col s12 m6 l3"> 
+	  	 	<!--4 filter_name -->
+	  	 	<label for="search1">Search:</label>
+	  	 	<input id="search1" type="text" ng-model="filter_name">
+		    <ul class="collection with-header">
+		    	<li class="collection-header"><h4>List of Heros</h4></li>
+		    	<!--4 filter_name  orderBy -->
+		       <li class="collection-item" ng-repeat="hero in heros | filter:filter_name | orderBy:'number'">
+		       	{{hero.name}} 
+		       	{{hero.number | number:0}}
+		       	{{hero.color | uppercase}}
+		       </li>
+		    </ul>
+		</div>
+		</div>
+
+		<div class="row">
+	    <div class="col s12 m6 l3"> 
+		    <h4 class="center">Add a new hero</h4>
+		  	<form class='form'>
+
+		  		<div class="col s12 m6 l3">    
+		  			<label for="name1">Name:</label> 
+		  			<!--2b ng-model -->
+		  			<input id="name1" class='form-control' type='text' name='name' ng-model='newHero.name'>
+		  		</div>
+		  		<div class="col s12 m6 l3"> 
+		  			<label for="text1">Number</label>
+		  			<!--2b ng-model -->
+		  			<textarea id="text1" class='form-control' type='text' name='number' ng-model='newHero.number'></textarea><p></p>
+		  		</div>    
+		  		<div class="col s12 m6 l3"> 
+		  			<!--2c ng-click -->
+		  			<input class= "btn green" type="submit" value="Submit" ng-click='addHero()'>
+		  		</div>
+
+		  	</form>
+	  	</div>   
+	  	</div>
+	  </div>
+</body>
+</html>
