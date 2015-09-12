@@ -1,0 +1,61 @@
+<html>
+<head>
+	<link href='css/materialize.css' rel='stylesheet' />
+	<script src='angular-1.4.5/angular.min.js'/></script>
+	<script type='text/javascript'>
+		var myAppModule = angular.module('myApp', []);
+		//1a create controller with array of objects
+		//notice $scope is passed in the function using the controller
+		//notice $scope contains array of objects
+		myAppModule.controller('heroController', function ($scope) { 
+			$scope.heros = [ {name: 'batman', number:11}, {name: 'superman', number:22} ]
+
+			//2a ng-click
+			$scope.addHero = function () {
+				//add to array
+				$scope.heros.push($scope.newHero);
+				//clear form values by giving it an empty object
+				$scope.newHero = {};
+			}
+
+		});
+	</script>
+</head>
+<body ng-app='myApp'>
+	<!--1b add ng-controller directive to div container -->
+	  <div class="container" ng-controller='heroController'>
+	  	<div class="row">
+	  	 <div class="col s12 m6 l3"> 
+		  	<h3>list of heros</h3>
+		    <ul>
+		       <li ng-repeat="hero in heros">{{hero.name}}, {{hero.number}}</li>
+		    </ul>
+		</div>
+		</div>
+
+		<div class="row">
+	    <div class="col s12 m6 l3"> 
+		    <h3>add a new hero</h3>
+		  	<form class='form'>
+
+		  		<div class="col s12 m6 l3">    
+		  			<label for="name1">Name:</label> 
+		  			<!--2b ng-model -->
+		  			<input id="name1" class='form-control' type='text' name='name' ng-model='newHero.name'>
+		  		</div>
+		  		<div class="col s12 m6 l3"> 
+		  			<label for="text1">Number</label>
+		  			<!--2b ng-model -->
+		  			<textarea id="text1" class='form-control' type='text' name='number' ng-model='newHero.number'></textarea><p></p>
+		  		</div>    
+		  		<div class="col s12 m6 l3"> 
+		  			<!--2c ng-click -->
+		  			<input class= "btn green" type="submit" value="Submit" ng-click='addHero()'>
+		  		</div>
+
+		  	</form>
+	  	</div>   
+	  	</div>
+	  </div>
+</body>
+</html>
